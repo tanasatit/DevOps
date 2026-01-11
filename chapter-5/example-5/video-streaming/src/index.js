@@ -34,7 +34,7 @@ async function main() {
 	function broadcastViewedMessage(messageChannel, videoPath) {
 	    console.log(`Publishing message on "viewed" exchange.`);
 	        
-	    const msg = { videoPath: videoPath };
+	    const msg = { videoId: videoPath };
 	    const jsonMsg = JSON.stringify(msg);
 	    messageChannel.publish("viewed", "", Buffer.from(jsonMsg)); // Publishes message to the "viewed" exchange.
 	}
@@ -42,8 +42,13 @@ async function main() {
     const app = express();
 
     app.get("/video", async (req, res) => { // Route for streaming video.
+        const id = req.query.id;
 
-        const videoPath = "./videos/SampleVideo_1280x720_1mb.mp4";
+        if(!id || (id != "1" && id != "2")) {
+            return res.status(400).send("Invalid video ID");
+        }
+
+        const videoPath = id === "1" ? "./videos/video1.mp4" : "./videos/video2.mp4";
         const stats = await fs.promises.stat(videoPath);
 
         res.writeHead(200, {
@@ -53,7 +58,7 @@ async function main() {
     
         fs.createReadStream(videoPath).pipe(res);
 
-        broadcastViewedMessage(messageChannel, videoPath); // Sends the "viewed" message to indicate this video has been watched.
+        broadcastViewedMessage(messageChannel, Number(id)); // Sends the "viewed" message to indicate this video has been watched.
     });
 
     app.listen(PORT, () => {

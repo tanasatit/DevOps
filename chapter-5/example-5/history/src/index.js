@@ -87,7 +87,13 @@ async function main() {
 
         const parsedMsg = JSON.parse(msg.content.toString()); // Parse the JSON message.
         
-        await historyCollection.insertOne({ videoPath: parsedMsg.videoPath }); // Record the "view" in the database.
+        // await historyCollection.insertOne({ videoPath: parsedMsg.videoPath }); // Record the "view" in the database.
+        const videoId = parsedMsg.videoId;
+
+        await historyCollection.insertOne({
+            name: `viewed-${videoId}`,
+            createdAt: new Date()
+        });
 
         console.log("Acknowledging message was handled.");
                 
@@ -100,7 +106,7 @@ async function main() {
     app.get("/history", async (req, res) => {
         const skip = parseInt(req.query.skip);
         const limit = parseInt(req.query.limit);
-        const history = await videosCollection.find()
+        const history = await historyCollection.find()
             .skip(skip)
             .limit(limit)
             .toArray();

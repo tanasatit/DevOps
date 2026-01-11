@@ -66,14 +66,17 @@ async function main() {
 
         const parsedMsg = JSON.parse(msg.content.toString()); // Parse the JSON message.
         
-        console.log("Received a 'viewed' message:");
-        console.log(JSON.stringify(parsedMsg, null, 4)); // JUST PRINTING THE RECEIVED MESSAGE.
+        // console.log("Received a 'viewed' message:");
+        // console.log(JSON.stringify(parsedMsg, null, 4)); // JUST PRINTING THE RECEIVED MESSAGE.
 
-        // ... ADD YOUR CODE HERE TO PROCESS THE MESSAGE ...
+        const videoId = parsedMsg.videoId;
+
+        console.log(`recommendation video ${videoId}`);
 
         console.log("Acknowledging message was handled.");
                 
         messageChannel.ack(msg); // If there is no error, acknowledge the message.
+
     };
 
     //
