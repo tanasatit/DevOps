@@ -1,0 +1,2 @@
+# Ignore Kubernetes secrets
+k8s-webapp-mongo/configs/mongodb-secret.yml
