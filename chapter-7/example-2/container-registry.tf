@@ -2,9 +2,9 @@
 # Creates a container registry on Azure so that you can publish your Docker images.
 #
 resource "azurerm_container_registry" "container_registry" {
-  name                = "flixtube"
+  name                = "flixtube6530200060"
   resource_group_name = azurerm_resource_group.flixtube.name
-  location            = "eastus"
+  location            = "eastasia"
   admin_enabled       = true
   sku                 = "Basic"
 }
