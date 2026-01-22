@@ -20,7 +20,7 @@ spec:
     spec:
       containers: 
       - name: video-streaming
-        image: bmdk1.azurecr.io/video-streaming:1
+        image: flixtube6530200060.azurecr.io/video-streaming:1
         imagePullPolicy: IfNotPresent
         env:
         - name: PORT
